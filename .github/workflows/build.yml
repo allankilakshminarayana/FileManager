@@ -39,16 +39,19 @@ jobs:
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
 
-      - name: Upload APK Artifact
+      - name: Find APK
+        run: find app/build/outputs -name "*.apk" -type f
+
+      - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
           name: FileManager-release
-          path: app/build/outputs/apk/release/app-release.apk
+          path: app/build/outputs/apk/**/*.apk
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0
-          files: app/build/outputs/apk/release/app-release.apk
+          files: app/build/outputs/apk/**/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
