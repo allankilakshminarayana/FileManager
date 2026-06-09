@@ -33,3 +33,11 @@ jobs:
         with:
           name: FileManager-debug
           path: app/build/outputs/apk/debug/app-debug.apk
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0
+          files: app/build/outputs/apk/release/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
